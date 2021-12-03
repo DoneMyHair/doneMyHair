@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\eren_\\source\\repos\\Hairdresser-App\\Hairdresser-App\\Hairdresser-App.csproj": {}
+    "C:\\Users\\eren_\\source\\repos\\doneMyHair\\Hairdresser-App\\Hairdresser-App\\Hairdresser-App.csproj": {}
   },
   "projects": {
-    "C:\\Users\\eren_\\source\\repos\\Hairdresser-App\\Hairdresser-App\\Hairdresser-App.csproj": {
+    "C:\\Users\\eren_\\source\\repos\\doneMyHair\\Hairdresser-App\\Hairdresser-App\\Hairdresser-App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\eren_\\source\\repos\\Hairdresser-App\\Hairdresser-App\\Hairdresser-App.csproj",
+        "projectUniqueName": "C:\\Users\\eren_\\source\\repos\\doneMyHair\\Hairdresser-App\\Hairdresser-App\\Hairdresser-App.csproj",
         "projectName": "Hairdresser-App",
-        "projectPath": "C:\\Users\\eren_\\source\\repos\\Hairdresser-App\\Hairdresser-App\\Hairdresser-App.csproj",
+        "projectPath": "C:\\Users\\eren_\\source\\repos\\doneMyHair\\Hairdresser-App\\Hairdresser-App\\Hairdresser-App.csproj",
         "packagesPath": "C:\\Users\\eren_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\eren_\\source\\repos\\Hairdresser-App\\Hairdresser-App\\obj\\",
+        "outputPath": "C:\\Users\\eren_\\source\\repos\\doneMyHair\\Hairdresser-App\\Hairdresser-App\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
