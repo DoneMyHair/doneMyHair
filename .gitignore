@@ -3,3 +3,8 @@
 ################################################################################
 
 /.vs
+/DoneMyHair/App_Data
+/DoneMyHair/.vs/DoneMyHair
+/DoneMyHair/bin
+/DoneMyHair/obj
+/DoneMyHair/packages
