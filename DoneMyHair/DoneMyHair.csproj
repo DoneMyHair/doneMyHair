@@ -181,10 +181,19 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\images\pexels-cottonbro-3992850.jpg" />
+    <Content Include="Content\assets\images\pexels-cottonbro-3993324.jpg" />
+    <Content Include="Content\assets\images\pexels-david-geib-3268732.jpg" />
+    <Content Include="Content\assets\images\pexels-kaique-rocha-331989.jpg" />
+    <Content Include="Content\assets\images\pexels-mikhail-nilov-7819736.jpg" />
+    <Content Include="Content\assets\images\pexels-thgusstavo-santana-1813346.jpg" />
+    <Content Include="Content\assets\images\pexels-valeria-boltneva-696287.jpg" />
+    <Content Include="Content\assets\logo\logo.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
