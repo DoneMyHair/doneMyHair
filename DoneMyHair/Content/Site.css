@@ -213,7 +213,8 @@ body {
     margin: 0;
 }
 /* Hedaer */
-#header {
+
+/*#header {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -226,10 +227,10 @@ body {
     margin: auto;
     display: flex;
     flex-direction: column;
-}
+}*/
 
 /*-----------------------------------*/
-.row-social {
+/*.row-social {
     max-height: auto;
     height: auto;
     display: flex;
@@ -312,10 +313,10 @@ body {
         margin: 0;
         text-align: start;
     }
-}
+}*/
 /*-----------------------------------*/
 
-.nav {
+/*.nav {
     width: 100%;
     height: auto;
     padding-top: 10px;
@@ -323,9 +324,9 @@ body {
     text-align: center;
     color: #18265b;
     position: sticky;
-    top: 0;
+    top: 0;*/
     /* margin-bottom: 4rem; */
-    background-color: #ffffff;
+    /*background-color: #ffffff;
     z-index: 99;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
@@ -553,18 +554,20 @@ body {
     .nav div.media_button {
         display: block;
     }
-}
+}*/
 /* İndex Page */
 #main {
     width: 100%;
     max-width: 1366px;
     margin: auto;
+    
 }
 
 .container-main {
     display: flex;
     flex-direction: column;
     height: auto;
+    margin-top: 4rem;
 }
 
 .card-saloon {
