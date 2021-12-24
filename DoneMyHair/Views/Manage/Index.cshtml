@@ -3,6 +3,10 @@
     ViewBag.Title = "Manage";
 }
 
+@* İşaretli kısıma kadar default oluşturulan hesap kontrol sayfaları mevcuttur *@
+@* işaretli kısımdan sonrası , sonradan oluşturulan mypage'dir  *@
+@* işaretli kısım satır 93 dedir *@
+
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
@@ -85,3 +89,108 @@
         </dd>
     </dl>
 </div>
+
+@* Burası erenkarasal tarafından oluşturulan mypage, dir  *@
+<section id="hairdresser-main">
+    <div class="title">
+        <h1 class="h1">Username</h1>
+        <hr width="15%">
+    </div>
+    <div class="container-hairdresser">
+        <aside class="aside">
+
+
+            <div class="hairdresser-left-side">
+                <h5 class="h4">Username :</h5>
+                <div class="desc">
+                    <p>Username</p>
+                </div>
+            </div>
+            <div class="hairdresser-left-side">
+                <h5 class="h4">Firstname :</h5>
+                <div class="desc">
+                    <p>Firstname
+                </div>
+
+                <div class="hairdresser-left-side">
+                    <h5 class="h4">Lastname :</h5>
+                    <div class="desc">
+                        <p>Lastname</p>
+                    </div>
+                </div>
+                <div class="hairdresser-left-side">
+                    <h5 class="h4">E-mail :</h5>
+                    <div class="desc">
+                        <p>lorem@lorem.com</p>
+                    </div>
+                </div>
+
+                <div class="hairdresser-left-side">
+                    <h5 class="h4">Phone Number :</h5>
+                    <div class="desc">
+                        <p>(555) 555-55-55 </p>
+                    </div>
+                </div>
+                <div class="hairdresser-left-side">
+                    <h5 class="h4">My Appointments :</h5>
+                    <div class="desc">
+                        <p>--- </p>
+                    </div>
+                </div>
+
+        </aside>
+        <div class="hairdresser-main">
+
+            <div class="container-hairdresser-form">
+                <div class="form-holder">
+                    <label for="name">Username <span>*</span></label>
+                    <input type="text" placeholder="İsim">
+                </div>
+                <div class="form-holder">
+                    <label for="name">Name and Surname<span>*</span></label>
+                    <input type="text" placeholder="İsim">
+                </div>
+
+                <div class="form-holder">
+                    <label for="name">Phone Number <span>*</span></label>
+                    <input type="tel" placeholder="Telefon Numarası">
+                </div>
+                <div class="form-holder">
+                    <label for="name">Email <span>*</span></label>
+                    <input type="email" placeholder="Email">
+                </div>
+
+                <div class="form-holder">
+                    <a href="#">Save</a>
+                </div>
+            </div>
+            <h2 class="h1 text-center mb-4">My Appointments</h2>
+            <h6 class="h6 text-center">You can cancel or change it here</h6>
+            <div class="card-saloon">
+                <div class="saloon-image">
+                    <img src="~/Content/assets/images/pexels-cottonbro-3992850.jpg" alt="">
+                </div>
+                <div class="saloon-content">
+                    <div class="saloon-header">
+                        <h1 class="h1 m-1">Hairdresser Name</h1>
+                        <hr width="150px" style="margin-left: 10px;">
+                    </div>
+                    <div class="saloon-body">
+
+                        <p class="saloon-body-title">Çalışan Açıklaması</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta distinctio nesciunt asperiores provident fugiat, aut doloremque magni vel ipsum ipsa beatae quisquam veritatis dolore corrupti commodi! Libero sunt molestias sed!</p>
+
+                    </div>
+                    <div class="saloon-footer">
+
+                        <a href="./hairdresser.html">Cancel</a>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>

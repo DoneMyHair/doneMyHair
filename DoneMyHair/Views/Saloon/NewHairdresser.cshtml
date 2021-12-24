@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewBag.Title = "NewHairdresser";
+}
+
+<section id="hairdresser-main">
+    <div class="title">
+        <h1 class="h1">New Hairdresser</h1>
+        <hr width="15%">
+    </div>
+    <div class="container-hairdresser">
+        <aside class="aside">
+
+
+            <div class="saloon-left-side">
+                <h5 class="h4">Description :</h5>
+                <div class="desc">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, dolores aperiam amet doloribus labore, consequatur veritatis ad temporibus ab earum harum omnis quidem impedit, explicabo adipisci non laboriosam mollitia sapiente!</p>
+                </div>
+            </div>
+            <div class="saloon-left-side">
+                <h5 class="h4">Adress :</h5>
+                <div class="desc">
+                    <p>Lorem ipsum dolor sit amet </p>
+                </div>
+            </div>
+            <div class="saloon-left-side">
+                <h5 class="h4">Phone Number :</h5>
+                <div class="desc">
+                    <p>(555) 555-55-55 </p>
+                </div>
+            </div>
+
+            <div class="saloon-left-side-images">
+                <h5 class="h4">Photos :</h5>
+                <img src="./assets/images/pexels-david-geib-3268732.jpg" alt="" class="img-fluid">
+                <img src="./assets/images/pexels-kaique-rocha-331989.jpg" alt="" class="img-fluid">
+                <img src="./assets/images/pexels-thgusstavo-santana-1813346.jpg" alt="" class="img-fluid">
+                <img src="./assets/images/pexels-valeria-boltneva-696287.jpg" alt="" class="img-fluid">
+            </div>
+            <section id="slides">
+                <h3 class="h3">Saloon Photos</h3>
+                <div class="slideshow-container">
+
+
+                    <div class="mySlides" style="display: block;">
+
+                        <img src="./assets/images/pexels-david-geib-3268732.jpg" style="width:100%;" loading="lazy">
+                        <!-- <h3 style="text-align: center; margin-bottom: 1rem; font-size: 30px; color: #e65c00">Lorem</h3> -->
+                        <!-- <div class="text"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Hic ex nemo in praesentium? Unde, esse id, amet de </div> -->
+                    </div>
+
+                    <div class="mySlides">
+
+                        <img src="./assets/images/pexels-kaique-rocha-331989.jpg" style="width:100%" loading="lazy">
+                        <!-- <h3 style="text-align: center; margin-bottom: 1rem; font-size: 30px; color: #e65c00">Lorem</h3> -->
+                        <!-- <div class="text"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Hic ex nemo in praesentium? Unde, esse id, amet de </div> -->
+                    </div>
+                    <div class="mySlides">
+
+                        <img src="./assets/images/pexels-thgusstavo-santana-1813346.jpg" style="width:100%" loading="lazy">
+                        <!-- <h3 style="text-align: center; margin-bottom: 1rem; font-size: 30px; color: #e65c00">Lorem</h3> -->
+                        <!-- <div class="text"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Hic ex nemo in praesentium? Unde, esse id, amet de </div> -->
+                    </div>
+                    <div class="mySlides">
+
+                        <img src="./assets/pexels-valeria-boltneva-696287.jpg" style="width:100%" loading="lazy">
+                        <!-- <h3 style="text-align: center; margin-bottom: 1rem; font-size: 30px; color: #e65c00">Lorem</h3> -->
+                        <!-- <div class="text"> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Hic ex nemo in praesentium? Unde, esse id, amet de </div> -->
+                    </div>
+
+
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+                <br>
+
+                <div style="text-align:center">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+
+                </div>
+
+
+            </section>
+
+        </aside>
+        <div class="hairdresser-main">
+
+            <div class="container-hairdresser-form">
+
+                <div class="form-holder">
+                    <label for="name">Name <span>*</span></label>
+                    <input type="text" placeholder="İsim">
+                </div>
+                <div class="form-holder">
+                    <label for="name">Surname <span>*</span></label>
+                    <input type="text" placeholder="Soyisim">
+                </div>
+                <div class="form-holder">
+                    <label for="name">Phone Number <span>*</span></label>
+                    <input type="tel" placeholder="Telefon Numarası">
+                </div>
+                <div class="form-holder">
+                    <label for="name">Email <span>*</span></label>
+                    <input type="email" placeholder="Email">
+                </div>
+                <div class="form-holder-textarea">
+                    <!-- <label for="name">Description <span>*</span></label> -->
+                    <textarea name="description" id="description" cols="30" rows="10" placeholder="Description"></textarea>
+                </div>
+                <div class="form-holder">
+                    <a href="#">Add Hairdresser</a>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+</section>
+
