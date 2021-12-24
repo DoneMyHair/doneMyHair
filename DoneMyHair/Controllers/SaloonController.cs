@@ -15,7 +15,9 @@ namespace DoneMyHair.Controllers
 
         }
         public ActionResult Saloon()
+
         {
+
             return View();
         }
         public ActionResult Hairdresser()
