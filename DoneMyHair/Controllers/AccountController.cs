@@ -9,21 +9,23 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DoneMyHair.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DoneMyHair.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
+
             UserManager = userManager;
             SignInManager = signInManager;
         }
@@ -52,6 +54,7 @@ namespace DoneMyHair.Controllers
             }
         }
 
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -60,14 +63,18 @@ namespace DoneMyHair.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
+        public async Task<ApplicationUser> GetUserByID(string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+            return user;
+        }
         //
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
-        {
+       {
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -76,10 +83,25 @@ namespace DoneMyHair.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            
             switch (result)
             {
+                
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    var user = GetUserByID(UserManager.FindByEmail(model.Email).Id).Result;
+                    if ( user.UserType == "saloon")
+                    {                        
+                        if (db.SaloonModels.Where(x => x.SaloonOwnerID == user.Id).Any())
+                        {
+                            return RedirectToLocal(returnUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Create", "SaloonModels");
+                        }
+                    }
+                    else return RedirectToLocal(returnUrl);
+
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -151,19 +173,27 @@ namespace DoneMyHair.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserType = model.UserType };
                 var result = await UserManager.CreateAsync(user, model.Password);
+               
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    var result2 = await UserManager.AddToRoleAsync(user.Id, model.UserType);
+                    if (result2.Succeeded)
+                    {
+                        if (model.UserType == "user")
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else if(model.UserType == "saloon")
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            TempData["ownerid"] = user.Id;
+                            return RedirectToAction("Create", "SaloonModels");
+                        }
+                    }
+                    AddErrors(result2);
                 }
                 AddErrors(result);
             }

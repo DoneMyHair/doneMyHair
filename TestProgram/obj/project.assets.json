@@ -8,23 +8,28 @@
     "net5.0": []
   },
   "packageFolders": {
-    "C:\\Users\\eren_\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\suley\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\eren_\\source\\repos\\doneMyHair\\TestProgram\\TestProgram.csproj",
+      "projectUniqueName": "C:\\Users\\suley\\Documents\\GitHub\\HairDresser\\TestProgram\\TestProgram.csproj",
       "projectName": "TestProgram",
-      "projectPath": "C:\\Users\\eren_\\source\\repos\\doneMyHair\\TestProgram\\TestProgram.csproj",
-      "packagesPath": "C:\\Users\\eren_\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\eren_\\source\\repos\\doneMyHair\\TestProgram\\obj\\",
+      "projectPath": "C:\\Users\\suley\\Documents\\GitHub\\HairDresser\\TestProgram\\TestProgram.csproj",
+      "packagesPath": "C:\\Users\\suley\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\suley\\Documents\\GitHub\\HairDresser\\TestProgram\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\eren_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\suley\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -33,6 +38,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -65,7 +71,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
