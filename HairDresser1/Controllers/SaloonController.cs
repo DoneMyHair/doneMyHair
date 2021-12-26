@@ -96,7 +96,8 @@ namespace HairDresser1.Controllers
                 saloon.ID = Guid.NewGuid().ToString();
                 _context.Add(saloon);
                 await _context.SaveChangesAsync();
-                return View(Details(saloon.ID));
+                ViewBag.dressers = new List<HairDresser>();
+                return View(nameof(Details),saloon);
             }
             return View(model);
         }

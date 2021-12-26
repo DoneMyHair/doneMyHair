@@ -27,3 +27,19 @@ function showSlides(n) {
     slides[slideIndex - 1].style.display = "block";
     dots[slideIndex - 1].className += " active";
 }
+
+function hamburger() {
+    var mainListDiv = document.getElementById("mainListDiv"),
+        mediaButton = document.getElementById("mediaButton");
+
+    mediaButton.onclick = function () {
+
+        "use strict";
+
+        mainListDiv.classList.toggle("show_list");
+        mediaButton.classList.toggle("active");
+
+    };
+};
+
+hamburger();

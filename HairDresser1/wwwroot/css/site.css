@@ -1,27 +1,27 @@
-﻿body {
+﻿/*body {
     padding-top: 50px;
     padding-bottom: 20px;
-}
+}*/
 
 /* Set padding to keep content from hitting the edges */
-.body-content {
+/*.body-content {
     padding-left: 15px;
     padding-right: 15px;
-}
+}*/
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
-.dl-horizontal dt {
+/*.dl-horizontal dt {
     white-space: normal;
-}
+}*/
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
-}
+}*/
 /* Footer */
 
 
@@ -214,7 +214,7 @@ body {
 }
 /* Hedaer */
 
-/*#header {
+#header {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -227,10 +227,10 @@ body {
     margin: auto;
     display: flex;
     flex-direction: column;
-}*/
+}
 
-/*-----------------------------------*/
-/*.row-social {
+
+.row-social {
     max-height: auto;
     height: auto;
     display: flex;
@@ -313,10 +313,10 @@ body {
         margin: 0;
         text-align: start;
     }
-}*/
-/*-----------------------------------*/
+}
 
-/*.nav {
+
+.nav {
     width: 100%;
     height: auto;
     padding-top: 10px;
@@ -324,9 +324,9 @@ body {
     text-align: center;
     color: #18265b;
     position: sticky;
-    top: 0;*/
-/* margin-bottom: 4rem; */
-/*background-color: #ffffff;
+    top: 0;
+ margin-bottom: 4rem; 
+background-color: #ffffff;
     z-index: 99;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
@@ -448,7 +448,7 @@ body {
     .nav div.media_button button.main_media_button {
         width: 100%;
         height: 100%;
-        background-color: transparent;
+        background-color: black;
         outline: 0;
         border: none;
         cursor: pointer;
@@ -554,8 +554,8 @@ body {
     .nav div.media_button {
         display: block;
     }
-}*/
-/* İndex Page */
+}
+/*/* İndex Page */
 #main {
     width: 100%;
     max-width: 1366px;
