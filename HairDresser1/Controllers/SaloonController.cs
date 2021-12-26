@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HairDresser1.Data;
 using HairDresser1.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace HairDresser1.Controllers
 {
@@ -97,7 +99,7 @@ namespace HairDresser1.Controllers
                 _context.Add(saloon);
                 await _context.SaveChangesAsync();
                 ViewBag.dressers = new List<HairDresser>();
-                return View(nameof(Details),saloon);
+                return RedirectToAction("Details", new { id = saloon.ID });
             }
             return View(model);
         }
@@ -109,8 +111,18 @@ namespace HairDresser1.Controllers
             {
                 return NotFound();
             }
-
-            var Saloon = await _context.Saloon.FindAsync(id);
+        
+            var Saloon = await _context.Saloon.Where(z => z.ID == id).Select(x => new SaloonModel()
+            {
+                ID = x.ID,
+                Description = x.Description,
+                Email = x.Email,
+                PhoneNumber = x.PhoneNumber,
+                SaloonName = x.SaloonName,
+                SaloonAdress = x.SaloonAdress,
+                SaloonOwnerID = x.SaloonOwnerID,
+                SaloonOwnerName = x.SaloonOwnerName
+            }).FirstOrDefaultAsync();
             if (Saloon == null)
             {
                 return NotFound();
@@ -123,9 +135,10 @@ namespace HairDresser1.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ID,SaloonName,PhoneNumber,Email,Description,SaloonOwnerID,SaloonAdress,Images")] Saloon Saloon)
+        public async Task<IActionResult> Edit(string id, SaloonModel model)
         {
-            if (id != Saloon.ID)
+            Saloon saloon;
+            if (id != model.ID)
             {
                 return NotFound();
             }
@@ -134,12 +147,32 @@ namespace HairDresser1.Controllers
             {
                 try
                 {
-                    _context.Update(Saloon);
+                    saloon = new Saloon()
+                    {
+                        ID = model.ID,
+                        Description = model.Description,
+                        Email = model.Email,
+                        PhoneNumber = model.PhoneNumber,
+                        SaloonName = model.SaloonName,
+                        SaloonAdress = model.SaloonAdress,
+                        SaloonOwnerID = model.SaloonOwnerID,
+                        SaloonOwnerName = model.SaloonOwnerName
+                    };
+                    string filePath = System.IO.Path.GetTempFileName();
+                    if (model.Image != null)
+                    {
+                        using var stream = new System.IO.FileStream(filePath, System.IO.FileMode.Create);
+                        await model.Image.CopyToAsync(stream, System.Threading.CancellationToken.None);
+                    }
+
+                    saloon.Images = System.IO.File.ReadAllBytes(filePath);
+                    
+                    _context.Saloon.Update(saloon);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SaloonExists(Saloon.ID))
+                    if (!SaloonExists(model.ID))
                     {
                         return NotFound();
                     }
@@ -148,9 +181,9 @@ namespace HairDresser1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details",new {id = saloon.ID });
             }
-            return View(Saloon);
+            return View(model);
         }
 
         // GET: Saloon/Delete/5

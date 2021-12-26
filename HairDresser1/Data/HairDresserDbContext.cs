@@ -17,5 +17,8 @@ namespace HairDresser1.Data
         public DbSet<Saloon> Saloon { get; set; }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<HairDresser> HairDresser { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<CommentModel> CommentModels { get; set; }
+
     }
 }

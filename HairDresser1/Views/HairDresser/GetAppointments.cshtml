@@ -1,0 +1,34 @@
+﻿@model List<HairDresser1.Data.Appointment>
+
+<h1>My Appointments</h1>
+@foreach (var item in Model)
+{
+    <div class="card-saloon">
+        <div class="saloon-image">
+            
+        </div>
+        <div class="saloon-content">
+            <div class="saloon-header">
+                <h1 class="h1 m-1">@item.HairDresserID</h1>
+                <hr width="150px" style="margin-left: 10px;">
+            </div>
+            <p>@item.UserID</p>
+            <div class="saloon-body">
+
+
+                <p>Date</p>
+                <p>@item.AppointmentDate.Date</p>
+                <p>Hours</p>
+                <p>@item.AppointmentDate.TimeOfDay</p>
+
+            </div>
+            <div class="saloon-footer">
+
+                <a asp-action="DeleteAppointment" asp-controller="HairDresser" asp-route-id="@item.ID">Delete</a>
+
+            </div>
+        </div>
+    </div>
+
+
+}

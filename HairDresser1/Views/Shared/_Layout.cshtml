@@ -47,10 +47,11 @@
                                 <a href="https://donemyhair.github.io/">Main Page</a>
                             </li>
                             <li>
-                                <a href="./">Saloons</a>
+                                <a asp-controller="Saloon" asp-action="Index">Saloons</a>
                             </li>
                             <li>
-                                <a href="#">#</a>
+                                @{string s = "asd";}
+                                <a asp-action="GetAppointments" asp-controller="HairDresser" asp-route-id="@s">My Appointments</a>
                             </li>
                             <li>
                                 <a href="#">#</a>
