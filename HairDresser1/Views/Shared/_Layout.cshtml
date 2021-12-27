@@ -51,16 +51,17 @@
                             </li>
                             <li>
                                 @{string s = "asd";}
-                                <a asp-action="GetAppointments" asp-controller="HairDresser" asp-route-id="@s">My Appointments</a>
+                                <a asp-action="GetAppointments" asp-controller="HairDresser" asp-route-id="@s">My-Appointments</a>
                             </li>
                             <li>
-                                <a href="#">#</a>
+                                <a asp-controller="ApplicationUsers" asp-action="Create">Create Saloon</a>
+                            </li>
+                           
+                            <li>
+                                <a asp-action="Login" asp-controller="Account">Login</a>
                             </li>
                             <li>
-                                <a href="./login.html">Login</a>
-                            </li>
-                            <li>
-                                <a href="./signup.html">Signup</a>
+                                <a asp-action="Signup" asp-controller="Account">Signup</a>
                             </li>
                         </ul>
                     </div>
