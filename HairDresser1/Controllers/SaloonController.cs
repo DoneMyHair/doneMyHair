@@ -9,16 +9,18 @@ using HairDresser1.Data;
 using HairDresser1.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Identity;
 
 namespace HairDresser1.Controllers
 {
     public class SaloonController : Controller
     {
         private readonly HairDresserDbContext _context;
-
-        public SaloonController(HairDresserDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public SaloonController(HairDresserDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Saloon
@@ -43,7 +45,7 @@ namespace HairDresser1.Controllers
         }
         public async Task<ApplicationUser> GetUserbyID (string id)
         {
-            return await _context.ApplicationUser.Where(m => m.ID == id).FirstOrDefaultAsync();
+            return await _userManager.FindByIdAsync(id);
         }
         // GET: Saloon/Details/5
         public async Task<IActionResult> Details(string id)
@@ -86,7 +88,7 @@ namespace HairDresser1.Controllers
                     SaloonAdress = model.SaloonAdress,
                     SaloonName = model.SaloonName,
                     SaloonOwnerID = TempData["ownerid"].ToString(),
-                    SaloonOwnerName = GetUserbyID(TempData["ownerid"].ToString()).Result.Name + " " + GetUserbyID(TempData["ownerid"].ToString()).Result.Surname
+                    SaloonOwnerName = GetUserbyID(TempData["ownerid"].ToString()).Result.FirstName + " " + GetUserbyID(TempData["ownerid"].ToString()).Result.Surname
                 };
                 string filePath = System.IO.Path.GetTempFileName();
                 if (model.Image != null)

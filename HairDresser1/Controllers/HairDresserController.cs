@@ -7,16 +7,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HairDresser1.Data;
 using HairDresser1.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace HairDresser1.Controllers
 {
     public class HairDresserController : Controller
     {
         private readonly HairDresserDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHttpContextAccessor _httpContext;
 
-        public HairDresserController(HairDresserDbContext context)
+
+        public HairDresserController(HairDresserDbContext context, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContext)
         {
             _context = context;
+            _httpContext = httpContext;
+            _userManager = userManager;
         }
 
         // GET: HairDresser
@@ -77,11 +85,17 @@ namespace HairDresser1.Controllers
             dene.ID = Guid.NewGuid().ToString();
             dene.SaloonID = s;
             dene.HairDresserID = h;
+            dene.UserID = dene.UserID = GetCurrentUser().Result.Id;           
             _context.Appointments.Add(dene);
             await _context.SaveChangesAsync();
             return RedirectToAction("Details",new { id = h});
         }
+        public async Task<ApplicationUser> GetCurrentUser()
+        {
+            return await _userManager.FindByIdAsync(_httpContext.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier));
+        }
 
+      
         [HttpPost]
         public async Task<IActionResult> MakeComment(MultiHairdresser model)
         {
@@ -89,6 +103,8 @@ namespace HairDresser1.Controllers
             string s = TempData["salonid"].ToString();
             var dene = model.commentModel;
             dene.ID = Guid.NewGuid().ToString();
+            dene.UserID = GetCurrentUser().Result.Id;
+            dene.UserName = GetCurrentUser().Result.FirstName + " " + GetCurrentUser().Result.Surname;
             dene.Time = DateTime.Now;
             dene.HairDresserID = h;
             _context.CommentModels.Add(dene);

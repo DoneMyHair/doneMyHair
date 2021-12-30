@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using HairDresser1.Data;
+using Microsoft.AspNetCore.Identity;
+using HairDresser1.Helpers;
 
 namespace HairDresser1
 {
@@ -25,10 +27,38 @@ namespace HairDresser1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+
 
             services.AddDbContext<HairDresserDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("HairDresserDbContext")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<HairDresserDbContext>().AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 5;
+                options.Password.RequiredUniqueChars = 1;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(20);
+                options.Lockout.MaxFailedAccessAttempts = 3;
+
+            });
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromMinutes(5);
+            });
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = Configuration["Application:LoginPath"];
+            });
+            services.AddControllersWithViews();
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +78,7 @@ namespace HairDresser1
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
