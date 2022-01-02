@@ -11,6 +11,6 @@ namespace HairDresser1.Data
         public string SaloonID { get; set; }
         public string HairDresserID { get; set; }
         public DateTime AppointmentDate { get; set; }
-        public string UserID { get; set; }
+        public string UserID { get; set; }        
     }
 }

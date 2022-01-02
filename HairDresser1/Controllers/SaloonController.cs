@@ -10,6 +10,8 @@ using HairDresser1.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace HairDresser1.Controllers
 {
@@ -17,19 +19,26 @@ namespace HairDresser1.Controllers
     {
         private readonly HairDresserDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        public SaloonController(HairDresserDbContext context, UserManager<ApplicationUser> userManager)
+        private readonly IHttpContextAccessor _httpContext;
+        public SaloonController(HairDresserDbContext context, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContext)
         {
             _context = context;
             _userManager = userManager;
+            _httpContext = httpContext;
         }
-
+        public async Task<ApplicationUser> GetCurrentUser()
+        {
+            var userId = _httpContext.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+            return user;
+        }
         // GET: Saloon
         public async Task<IActionResult> Index()
         {
             return View(await _context.Saloon.ToListAsync());
         }
 
-        public async Task<SaloonModel> GetSaloonbyID (string id)
+        public async Task<SaloonModel> GetSaloonbyID(string id)
         {
             return await _context.Saloon.Where(m => m.ID == id).Select(x => new SaloonModel()
             {
@@ -41,9 +50,9 @@ namespace HairDresser1.Controllers
                 SaloonName = x.SaloonName,
                 SaloonOwnerID = x.SaloonOwnerID
             }).FirstOrDefaultAsync();
-            
+
         }
-        public async Task<ApplicationUser> GetUserbyID (string id)
+        public async Task<ApplicationUser> GetUserbyID(string id)
         {
             return await _userManager.FindByIdAsync(id);
         }
@@ -65,7 +74,7 @@ namespace HairDresser1.Controllers
             return View(Saloon);
         }
 
-        // GET: Saloon/Create
+        [Authorize(Roles = "saloon")]
         public IActionResult Create()
         {
             return View();
@@ -80,6 +89,7 @@ namespace HairDresser1.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = GetCurrentUser().Result;
                 var saloon = new Saloon()
                 {
                     Description = model.Description,
@@ -87,8 +97,8 @@ namespace HairDresser1.Controllers
                     PhoneNumber = model.PhoneNumber,
                     SaloonAdress = model.SaloonAdress,
                     SaloonName = model.SaloonName,
-                    SaloonOwnerID = TempData["ownerid"].ToString(),
-                    SaloonOwnerName = GetUserbyID(TempData["ownerid"].ToString()).Result.FirstName + " " + GetUserbyID(TempData["ownerid"].ToString()).Result.Surname
+                    SaloonOwnerID = user.Id,
+                    SaloonOwnerName = user.FirstName + " " + user.Surname
                 };
                 string filePath = System.IO.Path.GetTempFileName();
                 if (model.Image != null)
@@ -106,14 +116,14 @@ namespace HairDresser1.Controllers
             return View(model);
         }
 
-        // GET: Saloon/Edit/5
+        [Authorize(Roles = "saloon")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-        
+
             var Saloon = await _context.Saloon.Where(z => z.ID == id).Select(x => new SaloonModel()
             {
                 ID = x.ID,
@@ -168,7 +178,7 @@ namespace HairDresser1.Controllers
                     }
 
                     saloon.Images = System.IO.File.ReadAllBytes(filePath);
-                    
+
                     _context.Saloon.Update(saloon);
                     await _context.SaveChangesAsync();
                 }
@@ -183,12 +193,12 @@ namespace HairDresser1.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details",new {id = saloon.ID });
+                return RedirectToAction("Details", new { id = saloon.ID });
             }
             return View(model);
         }
 
-        // GET: Saloon/Delete/5
+        [Authorize(Roles = "saloon")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -198,6 +208,10 @@ namespace HairDresser1.Controllers
 
             var Saloon = await _context.Saloon
                 .FirstOrDefaultAsync(m => m.ID == id);
+            if (Saloon.SaloonOwnerID != GetCurrentUser().Result.Id)
+            {
+                return NotFound();
+            }
             if (Saloon == null)
             {
                 return NotFound();
@@ -213,6 +227,25 @@ namespace HairDresser1.Controllers
         {
             var Saloon = await _context.Saloon.FindAsync(id);
             _context.Saloon.Remove(Saloon);
+            var appo = _context.Appointments.Where(x => x.SaloonID == Saloon.ID).ToListAsync().Result;
+            var hair = _context.HairDresser.Where(x => x.SaloonID == Saloon.ID).ToListAsync().Result;
+            List<CommentModel> comm = new();
+            foreach (var item in hair)
+            {
+                comm = _context.CommentModels.Where(x => x.HairDresserID == item.ID).ToListAsync().Result;
+            }
+            foreach (var item in hair)
+            {
+                _context.HairDresser.Remove(item);
+            }
+            foreach (var item in comm)
+            {
+                _context.CommentModels.Remove(item);
+            }
+            foreach (var item in appo)
+            {
+                _context.Appointments.Remove(item);
+            }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -220,6 +253,35 @@ namespace HairDresser1.Controllers
         private bool SaloonExists(string id)
         {
             return _context.Saloon.Any(e => e.ID == id);
+        }
+
+
+        public async Task<IActionResult> GetAllAppointments(string id)
+        {
+            var model = await _context.Appointments.Where(x => x.SaloonID == id).ToListAsync();
+            var apolist = new List<AppointmentModel>();
+            foreach (var item in model)
+            {
+                apolist.Add(new AppointmentModel()
+                {
+                    ID = item.ID,
+                    User = _userManager.FindByIdAsync(item.UserID).Result,
+                    AppointmentDate = item.AppointmentDate,
+                    HairDresser = _context.HairDresser.FirstOrDefaultAsync(x => x.ID == item.HairDresserID).Result,
+                    Saloon = _context.Saloon.FirstOrDefaultAsync(x => x.ID == item.SaloonID).Result
+                });
+            }
+            return View(apolist);
+        }
+
+        [Authorize(Roles = "saloon,user")]
+        [Route("Saloon/DeleteAppointment/{appoid}")]
+        public async Task<IActionResult> DeleteAppointment(string appoid)
+        {
+            var appo = await _context.Appointments.FirstOrDefaultAsync(x => x.ID == appoid);
+            _context.Appointments.Remove(appo);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("GetAllAppointments", new { id = appo.SaloonID });
         }
     }
 }

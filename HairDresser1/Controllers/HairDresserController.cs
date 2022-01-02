@@ -10,6 +10,7 @@ using HairDresser1.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HairDresser1.Controllers
 {
@@ -27,13 +28,17 @@ namespace HairDresser1.Controllers
             _userManager = userManager;
         }
 
-        // GET: HairDresser
-        public async Task<IActionResult> Index()
+        //// GET: HairDresser
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.HairDresser.ToListAsync());
+        //}
+        public async Task<HairDresser> getHairdresser(string id)
         {
-            return View(await _context.HairDresser.ToListAsync());
+            return await _context.HairDresser.FirstOrDefaultAsync(x => x.ID == id);
         }
+
         [HttpGet]
-        // GET: HairDresser/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -61,21 +66,47 @@ namespace HairDresser1.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "saloon,user")]
         [Route("HairDresser/GetAppointments/{userid}")]
         public async Task<IActionResult> GetAppointments(string userid)
         {
+            if (userid != GetCurrentUser().Result.Id)
+            {
+                return NotFound();
+            }
             var model = await _context.Appointments.Where(x => x.UserID == userid).ToListAsync();
-            return View(model);
+            var newmodel = new List<AppointmentModel>();
+            foreach (var item in model)
+            {
+                newmodel.Add(new AppointmentModel()
+                {
+                    AppointmentDate = item.AppointmentDate,
+                    HairDresser = await _context.HairDresser.FirstOrDefaultAsync(x=>x.ID == item.HairDresserID),
+                    ID = item.ID,
+                    Saloon = await _context.Saloon.FirstOrDefaultAsync(x=>x.ID == item.SaloonID),
+                    User = await _userManager.FindByIdAsync(item.UserID)
+                });
+            }
+            return View(newmodel);
         }
+
+        [Authorize(Roles = "user")]
         [Route("HairDresser/DeleteAppointment/{appoid}")]
         public async Task<IActionResult> DeleteAppointment(string appoid)
         {
+
             var appo = await _context.Appointments.FirstOrDefaultAsync(x => x.ID == appoid);
+            if (appo.UserID != GetCurrentUser().Result.Id)
+            {
+                return NotFound();
+            }
             _context.Appointments.Remove(appo);
             await _context.SaveChangesAsync();
             var model = await _context.Appointments.Where(x => x.UserID == appo.UserID).ToListAsync();
             return RedirectToAction("GetAppointments", new { userid = appo.UserID });
         }
+
+        [Authorize(Roles="saloon,user")]
         [HttpPost]
         public async Task<IActionResult> MakeAppointment(MultiHairdresser model)
         {
@@ -95,7 +126,7 @@ namespace HairDresser1.Controllers
             return await _userManager.FindByIdAsync(_httpContext.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier));
         }
 
-      
+        [Authorize(Roles = "saloon,user")]
         [HttpPost]
         public async Task<IActionResult> MakeComment(MultiHairdresser model)
         {
@@ -111,15 +142,15 @@ namespace HairDresser1.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Details", new { id = h });
         }
-            // GET: HairDresser/Create
-            public IActionResult Create()
+
+
+        [Authorize(Roles = "saloon")]
+        public IActionResult Create()
         {
             return View();
         }
 
-        // POST: HairDresser/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(HairDresserModel model)
@@ -136,7 +167,7 @@ namespace HairDresser1.Controllers
                     HairdresserSurname = model.HairdresserSurname
                 };
                 hairDresserModel.ID = Guid.NewGuid().ToString();
-                hairDresserModel.SaloonID = TempData["SaloonID"].ToString();
+                hairDresserModel.SaloonID = TempData["sid"].ToString();
                 string filePath = System.IO.Path.GetTempFileName();
                 if (model.Image != null)
                 {
@@ -151,7 +182,7 @@ namespace HairDresser1.Controllers
             return View(model);
         }
 
-        // GET: HairDresser/Edit/5
+        [Authorize(Roles = "saloon")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -202,7 +233,7 @@ namespace HairDresser1.Controllers
             return View(hairDresserModel);
         }
 
-        // GET: HairDresser/Delete/5
+        [Authorize(Roles = "saloon")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -212,6 +243,12 @@ namespace HairDresser1.Controllers
 
             var hairDresserModel = await _context.HairDresser
                 .FirstOrDefaultAsync(m => m.ID == id);
+            var s = _context.Saloon.FirstOrDefaultAsync(x => x.ID == hairDresserModel.SaloonID).Result.SaloonOwnerID;
+            var u = GetCurrentUser().Result.Id;
+            if ( s != u )
+            {
+                return NotFound();
+            }
             if (hairDresserModel == null)
             {
                 return NotFound();
@@ -220,7 +257,6 @@ namespace HairDresser1.Controllers
             return View(hairDresserModel);
         }
 
-        // POST: HairDresser/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

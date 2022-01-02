@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<HairDresser1.Data.ApplicationUser> _signInManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -44,15 +45,17 @@
                     <div class="main_list" id="mainListDiv">
                         <ul>
                             <li>
-                                <a href="https://donemyhair.github.io/">Main Page</a>
+                                <a href="/">Main Page</a>
                             </li>
                             <li>
                                 <a asp-controller="Saloon" asp-action="Index">Saloons</a>
                             </li>
-
-                            <li>
-                                <a asp-controller="ApplicationUsers" asp-action="Create">Create Saloon</a>
-                            </li>
+                            @if (_signInManager.IsSignedIn(User) && User.FindFirst("UserRole").Value == "saloon")
+                            {
+                                <li>
+                                    <a asp-controller="Saloon" asp-action="Create">Create Saloon</a>
+                                </li>
+                            }
                             <li>
                                 <partial name="_LoginInfo" />
                             </li>

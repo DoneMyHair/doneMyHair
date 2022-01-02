@@ -1,4 +1,4 @@
-﻿@model List<HairDresser1.Data.Appointment>
+﻿@model List<AppointmentModel>
 
 <h1>My Appointments</h1>
 @foreach (var item in Model)
@@ -6,14 +6,13 @@
     string months="";
     <div class="card-saloon">
         <div class="saloon-image">
-            
+            <img class="img-responsive full-width img-fluid" style="border-radius:4px" src="data:image/jpeg;base64,@Convert.ToBase64String(item.Saloon.Images) " />
         </div>
         <div class="saloon-content">
             <div class="saloon-header">
-                <h1 class="h1 m-1">@item.HairDresserID</h1>
+                <h1 class="h1 m-1">@item.HairDresser.HairdresserName @item.HairDresser.HairdresserSurname</h1>
                 <hr width="150px" style="margin-left: 10px;">
             </div>
-            <p>@item.UserID</p>
             <div class="saloon-body">
                 @switch (item.AppointmentDate.Month)
                 {

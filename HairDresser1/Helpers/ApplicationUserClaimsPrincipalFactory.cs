@@ -11,18 +11,19 @@ namespace HairDresser1.Helpers
 {
     public class ApplicationUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser, IdentityRole>
     {
-        public ApplicationUserClaimsPrincipalFactory(UserManager<ApplicationUser> userManager, 
+        public ApplicationUserClaimsPrincipalFactory(UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager, IOptions<IdentityOptions> options)
-            :base(userManager, roleManager, options)
+            : base(userManager, roleManager, options)
         {
         }
 
         protected override async Task<ClaimsIdentity> GenerateClaimsAsync(ApplicationUser user)
         {
-            var identity = await  base.GenerateClaimsAsync(user);
+            var identity = await base.GenerateClaimsAsync(user);
             identity.AddClaim(new Claim("UserFirstName", user.FirstName ?? ""));
             identity.AddClaim(new Claim("UserLastName", user.Surname ?? ""));
             identity.AddClaim(new Claim("UserID", user.Id ?? ""));
+            identity.AddClaim(new Claim("UserRole", user.UserType ?? ""));
             return identity;
         }
     }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using HairDresser1.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HairDresser1.Controllers
 {
@@ -40,22 +41,22 @@ namespace HairDresser1.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             return user;
         }
-        // GET: ApplicationUsers/Details/5
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var applicationUser = await _userManager.FindByIdAsync(id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(applicationUser);
-        }
+        //    var applicationUser = await _userManager.FindByIdAsync(id);
+        //    if (applicationUser == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(applicationUser);
+        //}
 
         [Route("logout")]
         public async Task<IActionResult> Logout()
@@ -100,7 +101,7 @@ namespace HairDresser1.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid credentials");
+                    ModelState.AddModelError("", "Your password or email is incorrect. Please try again");
                 }
             }
             return View(model);
@@ -178,9 +179,13 @@ namespace HairDresser1.Controllers
             return View(applicationUser);
         }
 
-        // GET: ApplicationUsers/Edit/5
+        [Authorize(Roles="saloon,user")]
         public async Task<IActionResult> Edit(string id)
         {
+            if (id != GetCurrentUser().Result.Id)
+            {
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -228,32 +233,34 @@ namespace HairDresser1.Controllers
             return View(applicationUser);
         }
 
-        // GET: ApplicationUsers/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        [Route("change-password")]
+        public IActionResult ChangePassword()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var applicationUser = await _userManager.FindByIdAsync(id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
-
-            return View(applicationUser);
+            return View();
         }
 
-        // POST: ApplicationUsers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
         {
-            await _userManager.DeleteAsync(await _userManager.FindByIdAsync(id));
-            return RedirectToAction("Index","Saloon");
-        }
+            if (ModelState.IsValid)
+            {
+                var user = await GetCurrentUser();
+                var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+                if (result.Succeeded)
+                {
+                    ViewBag.IsSuccess = true;
+                    ModelState.Clear();
+                    return View();
+                }
 
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+            }
+            return View(model);
+        }
         private bool ApplicationUserExists(string id)
         {
             return _userManager.FindByIdAsync(id).IsCompleted;
