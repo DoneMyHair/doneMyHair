@@ -107,7 +107,8 @@ namespace HairDresser1.Controllers
         }
 
 
-        [Route("signup")]
+        [Route("sign-up")]
+        [HttpGet]
         public IActionResult Signup()
         {
 
@@ -118,8 +119,8 @@ namespace HairDresser1.Controllers
         // POST: ApplicationUsers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("sign-up")]
         [HttpPost]
-
         public async Task<IActionResult> Signup(SignupModel applicationUser)
         {
             if (ModelState.IsValid)
