@@ -1,13 +1,14 @@
 ﻿@model HairDresser1.Data.Saloon
 
-<p>@Model.ID</p>
-<p>@Model.SaloonName</p>
-<p>@Model.SaloonOwnerName</p>
-<p>@Model.SaloonOwnerID</p>
-<p>@Model.SaloonAdress</p>
-<p>@Model.Description</p>
-<p>@Model.Email</p>
-<p>@Model.PhoneNumber</p>
+
+<p>Saloon Name: @Model.SaloonName</p>
+<p>Saloon Owner: @Model.SaloonOwnerName</p>
+
+<p>Saloon adress: @Model.SaloonAdress</p>
+<p>Saloon Description: @Model.Description</p>
+<p>Saloon mail: @Model.Email</p>
+<p>Saloon Phone Number: @Model.PhoneNumber</p>
+<p> Are u Sure to delete this Saloon</p>
 <img class="img-fluid" style="border-radius:4px" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Images)" />
 <form asp-action="Delete" method="post" enctype="multipart/form-data" asp-controller="Saloon">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
