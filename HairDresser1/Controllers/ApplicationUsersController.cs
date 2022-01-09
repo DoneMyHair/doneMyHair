@@ -128,8 +128,9 @@ namespace HairDresser1.Controllers
         [HttpPost]
         public async Task<IActionResult> Signup(SignupModel applicationUser)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && applicationUser.Terms)
             {
+
                 var user = new ApplicationUser()
                 {
                     FirstName = applicationUser.FirstName,
@@ -220,7 +221,26 @@ namespace HairDresser1.Controllers
             {
                 try
                 {
-                    await _userManager.UpdateAsync(applicationUser);
+                    var user = _userManager.FindByIdAsync(id).Result;
+                    if (applicationUser.FirstName != null)
+                    {
+                        user.FirstName = applicationUser.FirstName;
+                    }
+                    if (applicationUser.Surname != null)
+                    {
+                        user.Surname = applicationUser.Surname;
+                    }
+                    if (applicationUser.Email != null)
+                    {
+                        user.Email= applicationUser.Email;
+                        user.UserName = applicationUser.Email;
+                    }
+                    if (applicationUser.PhoneNumber != null)
+                    {
+                        user.PhoneNumber = applicationUser.PhoneNumber;
+                    }
+                    await _userManager.UpdateAsync(user);
+                    await _signInManager.RefreshSignInAsync(user);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

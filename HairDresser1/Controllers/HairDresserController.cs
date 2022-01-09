@@ -48,6 +48,8 @@ namespace HairDresser1.Controllers
 
             var hairDresserModel = await _context.HairDresser
                 .FirstOrDefaultAsync(m => m.ID == id);
+            var salon = _context.Saloon.Where(x => x.ID == hairDresserModel.SaloonID).FirstOrDefaultAsync().Result;
+            TempData["owneridd"] = salon.SaloonOwnerID;
             var commmentmodels = await _context.CommentModels.Where(x => x.HairDresserID == id).ToListAsync();
             var commentModel1 = new CommentModel();
             var appointment = new Appointment();
@@ -148,6 +150,14 @@ namespace HairDresser1.Controllers
             return RedirectToAction("Details", new { id = h });
         }
 
+        [Route("HairDresser/DeleteComment/{commid}")]
+        public async Task<IActionResult> DeleteComment(string commid)
+        {
+            string h = TempData["hairid"].ToString();
+            _context.CommentModels.Remove(await _context.CommentModels.FirstOrDefaultAsync(x => x.ID == commid));
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", new { id = h });
+        }
 
         [Authorize(Roles = "saloon")]
         public IActionResult Create()

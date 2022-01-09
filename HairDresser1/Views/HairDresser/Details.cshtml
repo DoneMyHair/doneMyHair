@@ -5,7 +5,7 @@
         ViewData["Title"] = "Details";
         TempData["hairid"] = Model.hairDresserModel.ID;
         TempData["salonid"] = Model.hairDresserModel.SaloonID;
-
+        
     }
 
     <section id="hairdresser-main">
@@ -53,7 +53,7 @@
 
             </aside>
             <div class="hairdresser-main">
-               
+
                 <div class="container-hairdresser-form">
 
                     @if (_signInManager.IsSignedIn(User) && User.FindFirst("UserRole").Value == "user")
@@ -109,7 +109,10 @@
                                 </p>
 
                             </div>
-
+                            @if (_signInManager.IsSignedIn(User) && User.FindFirst("UserRole").Value == "saloon" && User.FindFirst("UserID").Value == TempData["owneridd"].ToString())
+                            {
+                                <a asp-action="DeleteComment" asp-controller="Hairdresser" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+                            }
                         </div>
                     </div>
                 }
