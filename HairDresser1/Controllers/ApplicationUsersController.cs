@@ -159,6 +159,7 @@ namespace HairDresser1.Controllers
                         TempData["ownerid"] = user.Id;
                         ModelState.Clear();
                         return RedirectToAction("Create", "Saloon");
+                        
                     }
                     else
                     {

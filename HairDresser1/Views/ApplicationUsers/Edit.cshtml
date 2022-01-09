@@ -13,7 +13,7 @@
         <div class="saloon-footer">
             <a asp-action="ChangePassword" asp-controller="ApplicationUsers" asp-route-id="@Model.Id">Change Password</a>
         </div>    
-            <form asp-action="Edit">
+            <form asp-controller="ApplicationUsers" asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id" />
                 <div class="form-group">

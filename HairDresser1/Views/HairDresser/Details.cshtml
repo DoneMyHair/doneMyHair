@@ -1,155 +1,59 @@
 ﻿@model MultiHairdresser
-
 @inject Microsoft.AspNetCore.Identity.SignInManager<HairDresser1.Data.ApplicationUser> _signInManager
-
 
     @{
         ViewData["Title"] = "Details";
         TempData["hairid"] = Model.hairDresserModel.ID;
         TempData["salonid"] = Model.hairDresserModel.SaloonID;
+
     }
-@{
-    ViewData["Title"] = "Details";
-    TempData["hairid"] = Model.hairDresserModel.ID;
-    TempData["salonid"] = Model.hairDresserModel.ID;
+
+    <section id="hairdresser-main">
+        <div class="title">
+            <h1 class="h1">@Model.hairDresserModel.HairdresserName @Model.hairDresserModel.HairdresserSurname</h1>
+            <hr width="15%">
+        </div>
+        <div class="container-hairdresser">
+            <aside class="aside">
 
 
-}
-
-<section id="hairdresser-main">
-    <div class="title">
-        <h1 class="h1">@Model.hairDresserModel.HairdresserName @Model.hairDresserModel.HairdresserSurname</h1>
-        <hr width="15%">
-    </div>
-    <div class="container-hairdresser">
-        <aside class="aside">
-
-
-            <div class="hairdresser-left-side">
-                <h5 class="h4">Description :</h5>
-                <div class="desc">
-                    <p>
-                        @Model.hairDresserModel.HairdresserDescription
-                    </p>
-                </div>
-            </div>
-            <div class="hairdresser-left-side">
-                <h5 class="h4">Email :</h5>
-                <div class="desc">
-                    <p>
-                        @Model.hairDresserModel.HairdresserEmail
-                    </p>
-                </div>
-            </div>
-
-            <div class="hairdresser-left-side">
-                <h5 class="h4">Phone Number :</h5>
-                <div class="desc">
-                    <p>@Model.hairDresserModel.HairdresserPhoneNumber</p>
-                </div>
-            </div>
-            @*<div class="hairdresser-left-side">
-                    <h5 class="h4">Waiting Appointments :</h5>
+                <div class="hairdresser-left-side">
+                    <h5 class="h4">Description :</h5>
                     <div class="desc">
-                        <p> For Hairdresser 1 : @Html.ActionLink("Go To Appointment", "WaitingAppointments", "Saloon")</p>
-                        <p> For Hairdresser 2 :  @Html.ActionLink("Go To Appointment", "WaitingAppointments", "Saloon")</p>
-                        <p> For Hairdresser 3 :  @Html.ActionLink("Go To Appointment", "WaitingAppointments", "Saloon")</p>
-
-
+                        <p>
+                            @Model.hairDresserModel.HairdresserDescription
+                        </p>
                     </div>
-                </div>*@
-
-        </aside>
-        <div class="hairdresser-main">
-            <div class="calendar">
-                <div class="calendar__opts">
-                    <select name="calendar__month" id="calendar__month">
-                        <option selected>Jan</option>
-                        <option>Feb</option>
-                        <option>Mar</option>
-                        <option>Apr</option>
-                        <option>May</option>
-                        <option>Jun</option>
-                        <option>Jul</option>
-                        <option>Aug</option>
-                        <option>Sep</option>
-                        <option>Oct</option>
-                        <option>Nov</option>
-                        <option>Dec</option>
-                    </select>
-
-                    <select name="calendar__year" id="calendar__year">
-                        <option selected>2022</option>
-                        <option>2023</option>
-
-                        <option>2024</option>
-                    </select>
                 </div>
-
-                <div class="calendar__body">
-                    <div class="calendar__days">
-                        <div>M</div>
-                        <div>T</div>
-                        <div>W</div>
-                        <div>T</div>
-                        <div>F</div>
-                        <div>S</div>
-                        <div>S</div>
-                    </div>
-
-                    <div class="calendar__dates">
-                        <div class="calendar__date calendar__date--grey"><span>27</span></div>
-                        <div class="calendar__date calendar__date--grey"><span>28</span></div>
-                        <div class="calendar__date calendar__date--grey"><span>29</span></div>
-                        <div class="calendar__date calendar__date--grey"><span>30</span></div>
-                        <div class="calendar__date"><span>1</span></div>
-                        <div class="calendar__date"><span>2</span></div>
-                        <div class="calendar__date"><span>3</span></div>
-                        <div class="calendar__date"><span>4</span></div>
-                        <div class="calendar__date"><span>5</span></div>
-                        <div class="calendar__date"><span>6</span></div>
-                        <div class="calendar__date"><span>7</span></div>
-                        <div class="calendar__date"><span>8</span></div>
-                        <div class="calendar__date"><span>9</span></div>
-                        <div class="calendar__date"><span>10</span></div>
-                        <div class="calendar__date"><span>11</span></div>
-                        <div class="calendar__date"><span>12</span></div>
-                        <div class="calendar__date"><span>13</span></div>
-                        <div class="calendar__date"><span>14</span></div>
-                        <div class="calendar__date"><span>15</span></div>
-                        <div class="calendar__date calendar__date--selected calendar__date--first-date calendar__date--range-start">
-                            <span>16</span>
-                        </div>
-                        <div class="calendar__date calendar__date--selected calendar__date--last-date">
-                            <span>17</span>
-                        </div>
-                        <div class="calendar__date calendar__date--selected calendar__date--first-date">
-                            <span>18</span>
-                        </div>
-                        <div class="calendar__date calendar__date--selected"><span>19</span></div>
-                        <div class="calendar__date calendar__date--selected"><span>20</span></div>
-                        <div class="calendar__date calendar__date--selected calendar__date--last-date calendar__date--range-end">
-                            <span>21</span>
-                        </div>
-                        <div class="calendar__date"><span>22</span></div>
-                        <div class="calendar__date"><span>23</span></div>
-                        <div class="calendar__date"><span>24</span></div>
-                        <div class="calendar__date"><span>25</span></div>
-                        <div class="calendar__date"><span>26</span></div>
-                        <div class="calendar__date"><span>27</span></div>
-                        <div class="calendar__date"><span>28</span></div>
-                        <div class="calendar__date"><span>29</span></div>
-                        <div class="calendar__date"><span>30</span></div>
-                        <div class="calendar__date"><span>31</span></div>
+                <div class="hairdresser-left-side">
+                    <h5 class="h4">Email :</h5>
+                    <div class="desc">
+                        <p>
+                            @Model.hairDresserModel.HairdresserEmail
+                        </p>
                     </div>
                 </div>
 
-                <div class="calendar__buttons">
-                    <button class="calendar__button calendar__button--grey">Back</button>
-
-                    <button class="calendar__button calendar__button--primary">Apply</button>
+                <div class="hairdresser-left-side">
+                    <h5 class="h4">Phone Number :</h5>
+                    <div class="desc">
+                        <p>@Model.hairDresserModel.HairdresserPhoneNumber</p>
+                    </div>
                 </div>
+                @*<div class="hairdresser-left-side">
+                        <h5 class="h4">Waiting Appointments :</h5>
+                        <div class="desc">
+                            <p> For Hairdresser 1 : @Html.ActionLink("Go To Appointment", "WaitingAppointments", "Saloon")</p>
+                            <p> For Hairdresser 2 :  @Html.ActionLink("Go To Appointment", "WaitingAppointments", "Saloon")</p>
+                            <p> For Hairdresser 3 :  @Html.ActionLink("Go To Appointment", "WaitingAppointments", "Saloon")</p>
 
+
+                        </div>
+                    </div>*@
+
+            </aside>
+            <div class="hairdresser-main">
+               
                 <div class="container-hairdresser-form">
 
                     @if (_signInManager.IsSignedIn(User) && User.FindFirst("UserRole").Value == "user")
@@ -179,117 +83,55 @@
             <div class="form-holder">
                 <label for="name">Phone Number <span>*</span></label>
                 <input type="tel" placeholder="Telefon Numarası">
-
             </div>
-            <div class="container-hairdresser-form">
+            <div class="form-holder">
+                <label for="name">Email <span>*</span></label>
+                <input type="email" placeholder="Email">
+            </div>
+
+            <div class="form-holder">
+                <a href="#">Make an Appointment</a>
+            </div>*@
+                </div>
+                @foreach (var item in Model.commentsModel)
+                {
+                    <div class="card-comment">
+
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <h1 class="h1 m-1">@item.UserName</h1><span>@item.Time</span>
+                                <hr width="150px" style="margin-left: 10px;">
+                            </div>
+                            <div class="comment-body">
+
+                                <p>
+                                    @item.Content
+                                </p>
+
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
 
                 @if (_signInManager.IsSignedIn(User) && User.FindFirst("UserRole").Value == "user")
                 {
-                    <form asp-action="MakeAppointment" method="post" enctype="multipart/form-data" asp-controller="HairDresser">
+                    <form asp-action="MakeComment" method="post" enctype="multipart/form-data" asp-controller="HairDresser">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                         <div class="form-group">
-                            <label asp-for="appointment.AppointmentDate" class="control-label"></label>
-
-                            <input type="datetime-local" class="form-control" asp-for="appointment.AppointmentDate" id="dateTimeValue"  />
-                            
-                            <span asp-validation-for="appointment.AppointmentDate" class="text-danger"></span>
+                            <label asp-for="commentModel.Content" class="control-label"></label>
+                            <textarea asp-for="commentModel.Content" class="form-control"></textarea>
+                            <span asp-validation-for="commentModel.Content" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <input type="submit" value="Comment" class="btn btn-primary" />
                         </div>
                     </form>
                 }
-
             </div>
-
-                @*<div class="form-holder">
-                        <label for="name">Name <span>*</span></label>
-                        <input type="text" placeholder="İsim">
-                    </div>
-                    <div class="form-holder">
-                        <label for="name">Surname <span>*</span></label>
-                        <input type="text" placeholder="Soyisim">
-                    </div>
-                    <div class="form-holder">
-                        <label for="name">Phone Number <span>*</span></label>
-                        <input type="tel" placeholder="Telefon Numarası">
-                    </div>
-                    <div class="form-holder">
-                        <label for="name">Email <span>*</span></label>
-                        <input type="email" placeholder="Email">
-                    </div>
-
-                    <div class="form-holder">
-                        <a href="#">Make an Appointment</a>
-                    </div>*@
-            </div>
-            @foreach (var item in Model.commentsModel)
-            {
-                <div class="card-comment">
-
-                    <div class="comment-content">
-                        <div class="comment-header">
-                            <h1 class="h1 m-1">@item.UserName</h1><span>@item.Time</span>
-                            <hr width="150px" style="margin-left: 10px;">
-                        </div>
-                        <div class="comment-body">
-
-                            <p>
-                                @item.Content
-                            </p>
-
-                        </div>
-
-                    </div>
-                </div>
-            }
-
-
-            @if (_signInManager.IsSignedIn(User))
-            {
-                <form asp-action="MakeComment" method="post" enctype="multipart/form-data" asp-controller="HairDresser">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                    <div class="form-group">
-                        <label asp-for="commentModel.Content" class="control-label"></label>
-                        <textarea asp-for="commentModel.Content" class="form-control"></textarea>
-                        <span asp-validation-for="commentModel.Content" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="submit" value="Comment" class="btn btn-primary" />
-                    </div>
-                </form>
-            }
-
         </div>
-    </div>
 
-</section>
-
-@section scripts{
-
-    <script type="text/javascript">
-
-                var dateTimeValue = document.getElementById("dateTimeValue");
-                var date = new Date();
-                var dateTimeNow = date.getMinutes();
-
-
-            var arr = [0, 30];
-
-            for (var i = 0; i < arr.length; i++) {
-
-                dateTimeValue.value = `2022-01-03T00:${arr[i]}`;
-            }
-
-            //console.log(dateTimeValue.value)
-
-
-
-
-
-    </script>
-}
+    </section>

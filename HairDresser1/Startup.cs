@@ -37,7 +37,7 @@ namespace HairDresser1
 
             services.Configure<IdentityOptions>(options =>
             {
-                options.Password.RequiredLength = 5;
+                options.Password.RequiredLength = 3;
                 options.Password.RequiredUniqueChars = 1;
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;

@@ -22,14 +22,17 @@ namespace HairDresser1.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter your Phone Number")]
-        [Display(Name = "Phone Number")]        
+        [MinLength(10, ErrorMessage = "Please enter your Phone Number 10 digits")]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Please enter a strong password")]
+        [MinLength(5, ErrorMessage = "Please enter your password 5 digits")]
         [Compare("ConfirmPassword", ErrorMessage = "Password does not match")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        
 
         [Required(ErrorMessage = "Please confirm your password")]
         [Display(Name = "Confirm Password")]
