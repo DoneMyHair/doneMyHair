@@ -8,7 +8,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" asp-action="Logout" asp-controller="ApplicationUsers">Logout</a>
-          @*  <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">Change password</a>*@
+            @*  <a class="dropdown-item" asp-action="ChangePassword" asp-controller="Account">Change password</a>*@
             <a class="dropdown-item" asp-action="Edit" asp-controller="ApplicationUsers" asp-route-id="@User.FindFirst("UserID").Value">Edit Information</a>
             <a class="dropdown-item" asp-action="GetAppointments" asp-controller="HairDresser" asp-route-id="@User.FindFirst("UserID").Value">My Appointments</a>
         </div>
@@ -16,10 +16,13 @@
 }
 else
 {
-    <li class="nav-item">
+    <li>
         <a class="btn btn-outline-primary" asp-controller="ApplicationUsers" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">Login</a>
+    </li>
+    <li>
         <a class="btn btn-primary" asp-controller="ApplicationUsers" asp-action="Signup">Register</a>
     </li>
+    
 }
 
 

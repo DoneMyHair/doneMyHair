@@ -384,7 +384,7 @@ background-color: #ffffff;
 }
 
 .nav div.main_list {
-    width: 500px;
+    width: 600px;
     height: 44px;
     float: right;
 }
@@ -448,7 +448,7 @@ background-color: #ffffff;
     .nav div.media_button button.main_media_button {
         width: 100%;
         height: 100%;
-        background-color: black;
+        background-color: white;
         outline: 0;
         border: none;
         cursor: pointer;
@@ -917,7 +917,10 @@ input {
     font-size: 14px;
     font-weight: 300;
 }
-
+input[type=radio]{
+    height:20px;
+    width:20px;
+}
 .keep-login {
     display: flex;
     flex-direction: row;

@@ -126,7 +126,12 @@ namespace HairDresser1.Controllers
             return await _userManager.FindByIdAsync(_httpContext.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier));
         }
 
+
         [Authorize(Roles = "saloon,user")]
+
+       
+      
+
         [HttpPost]
         public async Task<IActionResult> MakeComment(MultiHairdresser model)
         {

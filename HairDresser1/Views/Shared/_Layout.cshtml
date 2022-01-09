@@ -57,7 +57,7 @@
                                 </li>
                             }
                             <li>
-                                <partial name="_LoginInfo" />
+                                <partial name="_LoginInfo"/>
                             </li>
 
                         </ul>
@@ -87,8 +87,8 @@
 
         window.addEventListener('scroll', function () {
             scrollpos = window.scrollY;
-            console.log(scrollpos);
-            console.log(header_height)
+            //console.log(scrollpos);
+            //console.log(header_height)
             if (scrollpos >= header_height) { add_class_on_scroll() }
             else { remove_class_on_scroll() }
 

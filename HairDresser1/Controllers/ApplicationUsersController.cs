@@ -120,7 +120,11 @@ namespace HairDresser1.Controllers
         // POST: ApplicationUsers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [Route("sign-up")]
+
+        [Route("signup")]
+
         [HttpPost]
         public async Task<IActionResult> Signup(SignupModel applicationUser)
         {
